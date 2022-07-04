@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # create directory
-mkdir 20200705v1
+# mkdir 20200705v1
 mkdir 20200705v1/full/
 mkdir 20200705v1/full/metadata/
 mkdir 20200705v1/full/pdf_parses/
@@ -11,6 +11,8 @@ wget -O 20200705v1/LICENSE 'https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/LIC
 wget -O 20200705v1/RELEASE_NOTES 'https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/RELEASE_NOTES?AWSAccessKeyId=AKIA5BJLZJPW4OD5EQ2P&Signature=Y%2FjdbcRAxmuSr9Gy7RhBqs06kL4%3D&Expires=1656966980'
 
 wget -O 20200705v1/full/metadata/metadata_0.jsonl.gz 'https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/full/metadata/metadata_0.jsonl.gz?AWSAccessKeyId=AKIA5BJLZJPW4OD5EQ2P&Signature=MVAB55P0EOXWn%2B3sR0MEf8NQIzw%3D&Expires=1656966980'
+
+wget -O 20200705v1/full/pdf_parses/pdf_parses_0.jsonl.gz 'https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/full/pdf_parses/pdf_parses_0.jsonl.gz?AWSAccessKeyId=AKIA5BJLZJPW4OD5EQ2P&Signature=ABcMb7E81ZSd%2Blzot66Rgxvv4MI%3D&Expires=1656966984'
 
 wget -O 20200705v1/full/metadata/metadata_1.jsonl.gz 'https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/full/metadata/metadata_1.jsonl.gz?AWSAccessKeyId=AKIA5BJLZJPW4OD5EQ2P&Signature=3vv%2FaktIfnkgWD4Zj%2FT8I4QDL38%3D&Expires=1656966980'
 
@@ -210,8 +212,6 @@ wget -O 20200705v1/full/metadata/metadata_98.jsonl.gz 'https://ai2-s2-s2orc.s3.a
 
 wget -O 20200705v1/full/metadata/metadata_99.jsonl.gz 'https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/full/metadata/metadata_99.jsonl.gz?AWSAccessKeyId=AKIA5BJLZJPW4OD5EQ2P&Signature=uu2bXkYB3UP2MR49WmgDD12vbHI%3D&Expires=1656966984'
 
-wget -O 20200705v1/full/pdf_parses/pdf_parses_0.jsonl.gz 'https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/full/pdf_parses/pdf_parses_0.jsonl.gz?AWSAccessKeyId=AKIA5BJLZJPW4OD5EQ2P&Signature=ABcMb7E81ZSd%2Blzot66Rgxvv4MI%3D&Expires=1656966984'
-
 wget -O 20200705v1/full/pdf_parses/pdf_parses_1.jsonl.gz 'https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/full/pdf_parses/pdf_parses_1.jsonl.gz?AWSAccessKeyId=AKIA5BJLZJPW4OD5EQ2P&Signature=QvIfng4xE8TE5TKxf54FyQXbp24%3D&Expires=1656966984'
 
 wget -O 20200705v1/full/pdf_parses/pdf_parses_10.jsonl.gz 'https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/full/pdf_parses/pdf_parses_10.jsonl.gz?AWSAccessKeyId=AKIA5BJLZJPW4OD5EQ2P&Signature=05meWZ%2BE%2BZgE85UtsqF4svhHkSo%3D&Expires=1656966984'
@@ -409,4 +409,3 @@ wget -O 20200705v1/full/pdf_parses/pdf_parses_97.jsonl.gz 'https://ai2-s2-s2orc.
 wget -O 20200705v1/full/pdf_parses/pdf_parses_98.jsonl.gz 'https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/full/pdf_parses/pdf_parses_98.jsonl.gz?AWSAccessKeyId=AKIA5BJLZJPW4OD5EQ2P&Signature=OjAAPULxQLfFZFFr7qxrsiHci9M%3D&Expires=1656966987'
 
 wget -O 20200705v1/full/pdf_parses/pdf_parses_99.jsonl.gz 'https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/full/pdf_parses/pdf_parses_99.jsonl.gz?AWSAccessKeyId=AKIA5BJLZJPW4OD5EQ2P&Signature=y3uH9VYOkt72MBdpkLj%2BetifA%2Fc%3D&Expires=1656966987'
-

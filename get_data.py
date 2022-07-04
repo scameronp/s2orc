@@ -1,6 +1,5 @@
 """
 
-
 Example of how one would download & process a single batch of S2ORC to filter to specific field of study.
 Can be useful for those who can't store the full dataset onto disk easily.
 Please adapt this to your own field of study.
@@ -27,8 +26,10 @@ import subprocess
 import gzip
 import io
 import json
+from turtle import down
 from tqdm import tqdm
-
+from collections import defaultdict
+import re
 
 # process single batch
 def process_batch(batch: dict):
@@ -80,11 +81,17 @@ if __name__ == '__main__':
 
     # TODO: make sure to put the links we sent to you here
     # there are 100 shards with IDs 0 to 99. make sure these are paired correctly.
-    download_linkss = [
-        {"metadata": "https://...", "pdf_parses": "https://..."},  # for shard 0
-        {"metadata": "https://...", "pdf_parses": "https://..."},  # for shard 1
-        {"metadata": "https://...", "pdf_parses": "https://..."},  # for shard 2
-    ]
+
+    download_linkss_dict = defaultdict(lambda: {"metadata": None, "pdf_parses": None})
+
+    with open('dl_s2orc_20200705v1_full_urls_expires_20220704.sh', 'r', encoding='utf-8') as f:
+        for line in f:
+            if metadata_match := re.search(r"^wget -O 20200705v1/full/metadata/metadata_(?P<shard_number>\d+).jsonl.gz '(?P<link>.+)'$", line):
+                download_linkss_dict[metadata_match.group("shard_number")]["metadata"] = metadata_match.group("link")
+            elif pdf_match := re.search(r"^wget -O 20200705v1/full/pdf_parses/pdf_parses_(?P<shard_number>\d+).jsonl.gz '(?P<link>.+)'$", line):
+                download_linkss_dict[pdf_match.group("shard_number")]["pdf_parses"] = pdf_match.group("link")
+
+    download_linkss = download_linkss_dict.values()
 
     # turn these into batches of work
     # TODO: feel free to come up with your own naming convention for 'input_{metadata|pdf_parses}_path'
