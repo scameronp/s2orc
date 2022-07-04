@@ -1,4 +1,6 @@
 """
+
+
 Example of how one would download & process a single batch of S2ORC to filter to specific field of study.
 Can be useful for those who can't store the full dataset onto disk easily.
 Please adapt this to your own field of study.
@@ -16,7 +18,9 @@ Creates directory structure:
         |-- pdf_parses_0.jsonl.gz    << input; deleted after processed
     |-- medicine/
         |-- pdf_parses_0.jsonl       << output
+
 """
+
 
 import os
 import subprocess
@@ -76,12 +80,10 @@ if __name__ == '__main__':
 
     # TODO: make sure to put the links we sent to you here
     # there are 100 shards with IDs 0 to 99. make sure these are paired correctly.
-    download_links = [
-        {"metadata": "https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/full/metadata/metadata_0.jsonl.gz?AWSAccessKeyId=AKIA5BJLZJPW4OD5EQ2P&Signature=F%2BvfhdLWsjyOaOPsrIUCozyiw84%3D&Expires=1654817320",
-         "pdf_parses": "https://ai2-s2-s2orc.s3.amazonaws.com/20200705v1/full/pdf_parses/pdf_parses_0.jsonl.gz?AWSAccessKeyId=AKIA5BJLZJPW4OD5EQ2P&Signature=3k9EkKtOoMHU2ikZWOqxiv%2FzkQQ%3D&Expires=1654817320"
-         }  # for shard 0
-        #{"metadata": "https://...", "pdf_parses": "https://..."},  # for shard 1
-        #{"metadata": "https://...", "pdf_parses": "https://..."},  # for shard 2
+    download_linkss = [
+        {"metadata": "https://...", "pdf_parses": "https://..."},  # for shard 0
+        {"metadata": "https://...", "pdf_parses": "https://..."},  # for shard 1
+        {"metadata": "https://...", "pdf_parses": "https://..."},  # for shard 2
     ]
 
     # turn these into batches of work
@@ -97,7 +99,7 @@ if __name__ == '__main__':
                                               os.path.basename(download_links['pdf_parses'].split('?')[0])),
         'output_pdf_parses_path': os.path.join(PDF_PARSES_OUTPUT_DIR,
                                                os.path.basename(download_links['pdf_parses'].split('?')[0])),
-    } for download_links in download_links]
+    } for download_links in download_linkss]
 
     for batch in batches:
         process_batch(batch=batch)
