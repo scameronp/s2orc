@@ -5,5 +5,5 @@ pdf_parses/**
 **.jsonl.gz
 
 # aws download links
-dl_s2orc_20200705v1_sample_urls_expires_20220704.sh
-dl_s2orc_20200705v1_sample_urls_expires_20220704.sh
+dl_s2orc_20200705v1_sample_urls_expires_*.sh
+dl_s2orc_20200705v1_full_urls_expires_*.sh
