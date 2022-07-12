@@ -30,6 +30,21 @@ from turtle import down
 from tqdm import tqdm
 from collections import defaultdict
 import re
+import glob
+
+# TODO: update with right info
+FIELD_OF_STUDY = 'Computer Science'
+FOLDER_NAME = 'computer_science'
+URLS_EXPIRES = '20220715'
+
+METADATA_INPUT_DIR = 'metadata/raw/'
+METADATA_OUTPUT_DIR = f'metadata/{FOLDER_NAME}/'
+PDF_PARSES_INPUT_DIR = 'pdf_parses/raw/'
+PDF_PARSES_OUTPUT_DIR = f'pdf_parses/{FOLDER_NAME}/'
+
+METADATA_FILE_LIST = [os.path.basename(x) for x in glob.glob(METADATA_OUTPUT_DIR + "*.jsonl.gz")]
+PDF_PARSES_FILE_LIST = [os.path.basename(x) for x in glob.glob(PDF_PARSES_OUTPUT_DIR + "*.jsonl.gz")]
+
 
 # process single batch
 def process_batch(batch: dict):
@@ -49,7 +64,7 @@ def process_batch(batch: dict):
             metadata_dict = json.loads(line)
             paper_id = metadata_dict['paper_id']
             mag_field_of_study = metadata_dict['mag_field_of_study']
-            if mag_field_of_study and 'Computer Science' in mag_field_of_study:     # TODO: <<< change this to your filter
+            if mag_field_of_study and FIELD_OF_STUDY in mag_field_of_study:     # TODO: <<< change this to your filter
                 paper_ids_to_keep.add(paper_id)
                 f_out.write(line)
 
@@ -67,12 +82,13 @@ def process_batch(batch: dict):
     os.remove(batch['input_pdf_parses_path'])
 
 
-if __name__ == '__main__':
+def already_downloaded(download_links):
+    metadata_filename = os.path.basename(download_links['metadata'].split('?')[0])
+    pdf_parses_filename = os.path.basename(download_links['pdf_parses'].split('?')[0])
+    return metadata_filename in METADATA_FILE_LIST and pdf_parses_filename in PDF_PARSES_FILE_LIST
 
-    METADATA_INPUT_DIR = 'metadata/raw/'
-    METADATA_OUTPUT_DIR = 'metadata/computer_science/'
-    PDF_PARSES_INPUT_DIR = 'pdf_parses/raw/'
-    PDF_PARSES_OUTPUT_DIR = 'pdf_parses/computer_science/'
+
+if __name__ == '__main__':
 
     os.makedirs(METADATA_INPUT_DIR, exist_ok=True)
     os.makedirs(METADATA_OUTPUT_DIR, exist_ok=True)
@@ -84,7 +100,7 @@ if __name__ == '__main__':
 
     download_linkss_dict = defaultdict(lambda: {"metadata": None, "pdf_parses": None})
 
-    with open('dl_s2orc_20200705v1_full_urls_expires_20220704.sh', 'r', encoding='utf-8') as f:
+    with open(f'dl_s2orc_20200705v1_full_urls_expires_{URLS_EXPIRES}.sh', 'r', encoding='utf-8') as f:
         for line in f:
             if metadata_match := re.search(r"^wget -O 20200705v1/full/metadata/metadata_(?P<shard_number>\d+).jsonl.gz '(?P<link>.+)'$", line):
                 download_linkss_dict[metadata_match.group("shard_number")]["metadata"] = metadata_match.group("link")
@@ -106,7 +122,8 @@ if __name__ == '__main__':
                                               os.path.basename(download_links['pdf_parses'].split('?')[0])),
         'output_pdf_parses_path': os.path.join(PDF_PARSES_OUTPUT_DIR,
                                                os.path.basename(download_links['pdf_parses'].split('?')[0])),
-    } for download_links in download_linkss]
+    } for download_links in download_linkss
+               if not already_downloaded(download_links)]
 
     for batch in batches:
         process_batch(batch=batch)
